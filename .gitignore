@@ -1,0 +1,13 @@
+
+
+# Ignore models folder
+/models/
+
+# Ignore node_modules folder
+/node_modules/
+
+# Ignore public folder
+/public/
+
+# Ignore .vscode folder
+/.vscode/

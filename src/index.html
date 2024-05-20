@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+      .scene {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+      .piece_info {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        font-size: 1.5em;
+        color: rgb(2, 1, 1);
+        z-index: 100;
+        display:block;
+      }
+      .scene-container {
+        position: relative; /* Make the scene-container a positioning context */
+        background-color: #E6E6E6;
+      }
+      .title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 7em;
+        font-family: Cambria;
+        color: rgb(2, 1, 1);
+        z-index: 100;
+      }
+
+      #menuButton {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        width: 20px;
+        height: 20px;
+        background-color: rgba(0, 0, 0, 1); /* Semi-transparent black */
+        color: white;
+        border: none;
+        cursor: pointer;
+        z-index: 10;
+      }
+      .menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100vh; /* Full height */
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 1); /* Semi-transparent black */
+        padding: 10px;
+        transition: all 0.3s;
+        transform: translateX(-100%);
+        color: #E6E6E6; /* White text */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 11;
+      }
+      .menu.active {
+        transform: translateX(0);
+      }
+      .menu-main {
+        width: 50%;
+      }
+      .menu-item {
+        margin-bottom: 20px; /* Adjust this value to your liking */
+      }
+           
+      .submenu {
+        position: absolute;
+        margin-top: 30%; /* Position the submenu 10% below the last menu item */
+        width: 50%;
+        max-height: 0;
+        overflow: hidden;
+
+      }
+      
+      .menu-item.active .submenu {
+        max-height: 200px; /* Adjust this value to fit your content */
+      }
+      .album {
+        margin-right: 20px; /* Adjust this value to your liking */
+      }
+    </style>
+  </head>
+  <body>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/",
+          "GLTFLoader": "https://unpkg.com/browse/three@0.162.0/examples/jsm/loaders/"
+        }
+      }
+    </script>
+
+    <!-- Menu -->
+    <div id="menu" class="menu">
+      <div class="menu-main">
+        <div class="menu-item" data-target="submenu1">
+          <a>Albums</a>
+        </div>
+        <div class="menu-item" data-target="submenu2">
+          <a>What is this?</a>
+        </div>
+        <div class="menu-item" data-target="submenu3">
+          <a>Find me</a>
+        </div>
+      </div>
+      <div id="submenu1" class="submenu">
+        <a id="album1" class="album">Album 01</a>
+        <a id="album2" class="album">Album 02</a>
+        <a id="album3" class="album">Album 03</a>
+      </div>
+      <div id="submenu2" class="submenu">
+        <p>This is a simple three.js app that displays a 3D scene.</p>
+      </div>
+      <div id="submenu3" class="submenu">
+        <p>www.tomaszswietlik.com</p>
+      </div>
+    </div>
+
+    <!-- Button to toggle menu -->
+    <button id="menuButton"></button>
+
+    <!-- welcome page -->
+    <div class="scene-container">
+      <div class="title">Poligon</div>
+      <div id="welcome" class="scene"></div>
+    </div>
+
+    <div class="scene-container">
+      <div class="piece_info">attenuation</div>
+      <div id="scene0" class="scene"></div>
+    </div>
+    <div class="scene-container">
+      <div class="piece_info">desolation of Faust</div>
+      <div id="scene1" class="scene"></div>
+    </div>
+    <div class="scene-container">
+      <div class="piece_info">performence</div>
+      <div id="scene2" class="scene"></div>
+    </div>
+    <div class="scene-container">
+      <div class="piece_info">executive funiction</div>
+      <div id="scene3" class="scene"></div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+
+    <!-- Script to handle menu toggle -->
+    <script>
+      var menu = document.getElementById("menu");
+      var menuButton = document.getElementById("menuButton");
+
+      menuButton.addEventListener("click", function () {
+        menu.classList.toggle("active");
+      });
+
+      document.querySelectorAll('.menu-item').forEach(item => {
+        item.addEventListener('click', event => {
+          // If the clicked item is already active, collapse it and return
+          if (item.classList.contains('active')) {
+            item.classList.remove('active');
+            document.getElementById(item.dataset.target).style.maxHeight = '0';
+            return;
+          }
+      
+          // Remove 'active' class from all menu items
+          document.querySelectorAll('.menu-item.active').forEach(activeItem => {
+            activeItem.classList.remove('active');
+            document.getElementById(activeItem.dataset.target).style.maxHeight = '0';
+          });
+      
+          // Add 'active' class to the clicked item
+          item.classList.add('active');
+          document.getElementById(item.dataset.target).style.maxHeight = '200px'; // Adjust this value to fit your content
+        });
+      });
+
+    </script>
+  </body>
+</html>
