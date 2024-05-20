@@ -28,7 +28,7 @@ export function createScene2() {
 
     const loader = new GLTFLoader();
 
-    const file_name = 'models/skull_downloadable/skull.gltf';
+    const file_name = '../../models/skull_downloadable/skull.gltf';
 
     let skull; // Define skull here
 

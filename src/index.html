@@ -34,12 +34,11 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 7em;
+        font-size: 5em;
         font-family: Cambria;
         color: rgb(2, 1, 1);
-        z-index: 100;
+        z-index: 10;
       }
-
       #menuButton {
         position: fixed;
         top: 10px;
@@ -50,7 +49,7 @@
         color: white;
         border: none;
         cursor: pointer;
-        z-index: 10;
+        z-index: 50;
       }
       .menu {
         position: fixed;
@@ -68,7 +67,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        z-index: 11;
+        z-index: 50;
+        font-family: monospace;
+        font-size: 1.1em;
       }
       .menu.active {
         transform: translateX(0);
@@ -78,8 +79,7 @@
       }
       .menu-item {
         margin-bottom: 20px; /* Adjust this value to your liking */
-      }
-           
+      } 
       .submenu {
         position: absolute;
         margin-top: 30%; /* Position the submenu 10% below the last menu item */
@@ -88,7 +88,6 @@
         overflow: hidden;
 
       }
-      
       .menu-item.active .submenu {
         max-height: 200px; /* Adjust this value to fit your content */
       }
@@ -122,15 +121,15 @@
         </div>
       </div>
       <div id="submenu1" class="submenu">
-        <a id="album1" class="album">Album 01</a>
+        <a id="album1" class="album">Poligon</a>
         <a id="album2" class="album">Album 02</a>
         <a id="album3" class="album">Album 03</a>
       </div>
       <div id="submenu2" class="submenu">
-        <p>This is a simple three.js app that displays a 3D scene.</p>
+        <p>Architecture should be published like music.</p>
       </div>
       <div id="submenu3" class="submenu">
-        <p>www.tomaszswietlik.com</p>
+        <p>contact@tomaszswietlik.com</p>
       </div>
     </div>
 
@@ -143,6 +142,7 @@
       <div id="welcome" class="scene"></div>
     </div>
 
+    <!-- Scenes -->
     <div class="scene-container">
       <div class="piece_info">attenuation</div>
       <div id="scene0" class="scene"></div>
@@ -160,17 +160,30 @@
       <div id="scene3" class="scene"></div>
     </div>
 
+    <!-- Scripts -->
     <script type="module" src="/main.js"></script>
 
-    <!-- Script to handle menu toggle -->
+    
     <script>
       var menu = document.getElementById("menu");
       var menuButton = document.getElementById("menuButton");
 
+      // Menu button click event
       menuButton.addEventListener("click", function () {
         menu.classList.toggle("active");
       });
 
+      // Hide the menu
+      document.addEventListener('click', function(event) {
+        if (event.target === menuButton) {
+          return;
+        }
+        if (!menu.contains(event.target) && menu.classList.contains('active')) {
+          menu.classList.remove('active');
+        }
+      });
+
+      // Menu item click event
       document.querySelectorAll('.menu-item').forEach(item => {
         item.addEventListener('click', event => {
           // If the clicked item is already active, collapse it and return
